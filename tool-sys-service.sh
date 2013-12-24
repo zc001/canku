@@ -22,6 +22,6 @@ script
 
 export HOME="/root"       
 
-exec /usr/local/bin/node /var/canku/app.js >> /var/canku/log/log.1 2>&1
+exec /usr/local/bin/node /home/shiling/canku/app.js >> /home/shiling/canku/log/log.1 2>&1
 
 end script   
