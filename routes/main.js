@@ -260,7 +260,11 @@ exports.login = function (req, res) {
       if (!err) {
         if (user != null) {
           util.gen_session(user.name, user.password, res);
-          res.redirect('/');
+          if(!user.gid) {
+              res.redirect('/user/account?tip=gid');
+          } else {
+              res.redirect('/');
+          }
         } else {
           res.redirect('/user/login?tip=error')
         }
@@ -456,6 +460,9 @@ exports.user_account = function (req, res) {
 
   if (req.method == "GET") {
     switch (req.query['tip']) {
+      case 'gid':
+        var tip = "请先设置分组, 否则无法提交订单.";
+        break;
       case 'empty':
         var tip = "请填写完整后再提交";
         break;
