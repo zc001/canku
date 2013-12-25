@@ -96,6 +96,10 @@ exports.shop = function (req, res, next) {
 
 // POST URL: /submit_order
 exports.submit_order = function (req, res) {
+    if (!req.session.user.gid) {
+      res.send('{"result":"error"}');
+      return;
+    }
 
   //计算运气
   var luck = Math.floor(Math.random() * 100);
