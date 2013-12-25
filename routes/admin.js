@@ -15,6 +15,7 @@ db.bind('shop');
 db.bind('food');
 db.bind('user');
 db.bind('balance_logs');
+db.bind('group');
 
 exports.index = function (req, res) {
   res.render('admin/index', {title: "后台管理"});
@@ -301,6 +302,44 @@ exports.shop_delete = function (req, res) {
           res.send(200);
         }
       })
+    }
+  });
+}
+
+exports.group_index = function (req, res) {
+  db.group.find({}).toArray(function (err, result) {
+    if (!err) {
+      res.render('admin/group/index', {title: "分组列表", shops: result});
+    } else {
+      res.render('admin/group/index', {itle: "分组列表", shops: []});
+    }
+  });
+};
+
+exports.group_add = function (req, res) {
+  if (req.method == "GET") {
+    res.render('admin/group/add', {title: "添加分组"});
+  }
+  else if (req.method == "POST") {
+    var name = req.body.name;
+
+    var group = {
+      'name': name,
+    };
+
+    db.group.insert(group, function (err, result) {
+      if (!err) {
+        res.redirect('/admin/group');
+      }
+    });
+  }
+};
+
+exports.group_delete = function (req, res) {
+  var id = req.params.id;
+  db.group.remove({"_id": db.ObjectID.createFromHexString(id)}, function (err, result) {
+    if (!err) {
+      res.send(200);
     }
   });
 }

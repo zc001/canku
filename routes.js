@@ -38,6 +38,10 @@ module.exports = function (app) {
   app.get('/admin/food/edit/:id', main.auth_admin, admin.food_edit);
   app.get('/admin/food/delete/:id', main.auth_admin, admin.food_delete);
   app.post('/admin/food/edit/:id', main.auth_admin, admin.food_edit);
+  app.get('/admin/group', main.auth_admin, admin.group_index);
+  app.get('/admin/group/add', main.auth_admin, admin.group_add);
+  app.post('/admin/group/add', main.auth_admin, admin.group_add);
+  app.get('/admin/group/delete/:id', main.auth_admin, admin.group_delete);
   app.get('/admin/user', main.auth_admin, main.auth_super_admin, admin.user_index);
   app.get('/admin/user/orders', main.auth_admin, main.auth_super_admin, admin.user_orders);
   app.get('/admin/user/add_balance', main.auth_admin, main.auth_super_admin, admin.user_add_balance);
