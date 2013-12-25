@@ -115,6 +115,7 @@ exports.submit_order = function (req, res) {
     shop_id: shop_id,
     shop_name: shop_name,
     user_id: req.session.user._id,
+    gid: req.session.user.gid,
     user_name: req.session.user.name,
     time: util.getUTC8Time("YYYY-MM-DD HH:mm:ss"),
     total: total,
