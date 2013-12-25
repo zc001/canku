@@ -16,6 +16,7 @@ db.bind('food');
 db.bind('order');
 db.bind('user');
 db.bind('balance_logs');
+db.bind('group');
 
 // GET URL /today
 exports.today = function (req, res, next) {
@@ -473,10 +474,16 @@ exports.user_account = function (req, res) {
         break;
     }
     db.user.findOne({'name': req.session.user.name}, function (err, result) {
-      if (!err) {
-        result.email = result.email || "";
-        res.render('user/account', {user: result, tip: tip});
-      }
+        if (!err) {
+            db.group.find({}).toArray(function (err2, groups_result) {
+                result.email = result.email || "";
+                if (!err) {
+                    res.render('user/account', {user: result, tip: tip, groups: groups_result});
+                } else {
+                    res.render('user/account', {user: result, tip: tip, groups: []});
+                }
+			});    
+        }
     });
   } else {
     if (req.method == "POST") {
@@ -490,6 +497,7 @@ exports.user_account = function (req, res) {
           var new_pwd = req.body.new_pwd;
           var name = req.body.name;
           var email = req.body.email;
+          var gid = req.body.gid;
           if (name == "" || email == "" || (new_pwd != "" && pwd == "")) {
             res.redirect('/user/account?tip=empty');
             return;
@@ -497,6 +505,7 @@ exports.user_account = function (req, res) {
 
           result.email = email;
           result.name = name;
+          result.gid = gid;
 
           //如果旧密码不为空，说明需要修改密码
           if (pwd != "") {

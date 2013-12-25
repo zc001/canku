@@ -21,6 +21,15 @@
                  value="<%=user.name%>" required="" />
         </div>
         <div class="item">
+          <label for="setting-group">分组</label>
+          <select name="gid" id="setting-group">
+            <option value="0">请选择</option>
+            <% groups.forEach(function(group){%>
+                <option value="<%=group._id%>" <% if (group._id == user.gid) { %>selected="selected"<% } %> ><%=group.name%></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="item">
           <label for="setting-pwd">旧密码</label>
           <input name="pwd" id="setting-pwd" type="password" maxlength="32" class="text-32" />
           <em>不修改密码请留空</em>
