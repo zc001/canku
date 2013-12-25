@@ -86,27 +86,33 @@ exports.getToday = function (cb) {
 
         //店铺ID
         var shop_id = orders[i].shop_id;
+        var gid = orders[i].gid;
+        var tag_id = shop_id + "_" + gid;
 
         //订单
         var order = orders[i];
 
-        //不存在这个店铺，需要先查找出店铺信息后再添加
-        if (!group[shop_id]) {
+        //不存在这个tag，需要先查找出tag信息后再添加
+        if (!group[tag_id]) {
           db.shop.findOne({'_id': db.ObjectID.createFromHexString(shop_id)}, function (err, shop) {
-            group[shop_id] = {
-              shop: shop,
-              totalPrice: 0,
-              totalNum: 0,
-              minLuck: {luck: 100},
-              analytics: {},
-              orders: []
-            };
-            //统计金额，以及数量
-            analyse(shop_id, order, i);
+              db.group.findOne({'_id': db.ObjectID.createFromHexString(gid)}, function (err2, ugroup){
+                group[tag_id] = {
+                  shop: shop,
+                  ugroup: ugroup,
+                  totalPrice: 0,
+                  totalNum: 0,
+                  minLuck: {luck: 100},
+                  analytics: {},
+                  orders: []
+                };
+                //统计金额，以及数量
+                analyse(tag_id, order, i);
+              
+              });
           });
         } else {
           //统计金额，以及数量
-          analyse(shop_id, order, i);
+          analyse(tag_id, order, i);
         }
       }
 

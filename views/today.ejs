@@ -7,11 +7,11 @@
   <% for(var i = 0;i < group.length; i++){ var orders = group[i];%>
   <div id="shop-<%=orders.shop._id%>">
     <h1 class="page-title">
-      <strong><a href="/shop/<%=orders.shop._id%>"><%=orders.shop.name%></a> </strong>
+      <strong><a href="/shop/<%=orders.shop._id%>"><%=orders.shop.name%> - <%=orders.ugroup.name%></a> </strong>
       <span class="shop_tel">电话：<%=orders.shop.tel%></span>
       <span class="shop_address">地址：<%=orders.shop.address%></span>
       <%if(orders.minLuck.user_name){%>
-      <span style="float: right;">目测，由 <strong><%=orders.minLuck.user_name%></strong>喂人民服务</span>
+      <!--<span style="float: right;">目测，由 <strong><%=orders.minLuck.user_name%></strong>喂人民服务</span>-->
       <%}%>
     </h1>
     <section class="main clearfix" style="margin-bottom: 20px">
@@ -22,7 +22,6 @@
             <th class="name">姓名</th>
             <th class="food">订单明细</th>
             <th class="total">应付</th>
-            <th class="random">运气值</th>
             <th class="payStatus">订单状态</th>
           </tr>
           </thead>
@@ -36,10 +35,6 @@
                 <li><%=food.name%> - <%=food.price%>元 - <%=food.num%> 份</li>
                 <%})%>
               </ul>
-            </td>
-            <td class="total">￥<%=order.total%></td>
-            <td class="luck" data-luck="<%=order.luck%>">
-              <div class="bar" style="width:<%=order.luck*0.9%>px"><%=order.luck%></div>
             </td>
             <td>
               <% if(order.canceled){ %>
