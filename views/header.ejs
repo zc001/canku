@@ -15,7 +15,12 @@
         <li><a href="/today">今日订单</a></li>
         <% if (locals.session.user) { %>
         <li class="nav_item_my">
-          <a href='#'><%=locals.session.user.name%></a>
+          <a href='#'>
+              <%=locals.session.user.name%>
+              <% if (!locals.session.user.gid) {%>
+              (请先设置分组)
+              <% } %>
+          </a>
           <ul id="nav_my">
             <li><a href="/user/order">我的订单</a></li>
             <li><a href="/user/balance">账户余额</a></li>
