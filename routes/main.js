@@ -96,7 +96,7 @@ exports.shop = function (req, res, next) {
 
 // POST URL: /submit_order
 exports.submit_order = function (req, res) {
-    if (!req.session.user.gid) {
+    if (!req.session.user.gid || req.session.user.gid == "0") {
       res.send('{"result":"error"}');
       return;
     }
