@@ -17,11 +17,11 @@ exports.getToday = function (cb) {
   var h = (new Date(util.getUTC8Time()).getHours());
   var start_t = '';
   var end_t = '';
-  if (h < 15) {
+  if (h < 23) {
     start_t = dateformat(new Date(), 'yyyy-mm-dd ') + "00:00:00";
-    end_t = dateformat(new Date(), 'yyyy-mm-dd ') + "15:00:00";
+    end_t = dateformat(new Date(), 'yyyy-mm-dd ') + "23:00:00";
   } else {
-    start_t = dateformat(new Date(), 'yyyy-mm-dd ') + "15:00:00";
+    start_t = dateformat(new Date(), 'yyyy-mm-dd ') + "23:00:00";
     end_t = dateformat(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), 'yyyy-mm-dd ') + "00:00:00";
   }
 
